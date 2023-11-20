@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     private StarterAssetsInputs input;
     private ThirdPersonController controller;
+    private Animator animator;
 
     [Header("Aim")]
     [SerializeField]
@@ -28,6 +29,7 @@ public class PlayerManager : MonoBehaviour
     {
         input = GetComponent<StarterAssetsInputs>();
         controller = GetComponent<ThirdPersonController>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -40,6 +42,7 @@ public class PlayerManager : MonoBehaviour
         if (input.aim)
         {
             AimController(true);
+            animator.SetLayerWeight(1, 1);
 
             Vector3 targetPosition = Vector3.zero;
             Transform camTransform = Camera.main.transform;
@@ -65,6 +68,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             AimController(false);
+            animator.SetLayerWeight(1, 0);
         }
     }
 
