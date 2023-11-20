@@ -3,6 +3,7 @@ using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -21,9 +22,14 @@ public class PlayerManager : MonoBehaviour
     private GameObject aimObject;
     [SerializeField]
     private float aimObjDis = 10f;
-
     [SerializeField]
     private LayerMask targetLayer;
+
+    [Header("IK")]
+    [SerializeField]
+    private Rig handRig;
+    [SerializeField]
+    private Rig aimRig;
 
     void Start()
     {
@@ -49,6 +55,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             AimController(false);
+            SetRigWeight(0);
             animator.SetLayerWeight(1, 1);
             animator.SetTrigger("Reroad");
             controller.isReroad = true;
@@ -85,6 +92,8 @@ public class PlayerManager : MonoBehaviour
 
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * aimSpeed);
 
+            SetRigWeight(1);
+
             if (input.shoot)
             {
                 animator.SetBool("Shoot", true);
@@ -97,6 +106,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             AimController(false);
+            SetRigWeight(0);
             animator.SetLayerWeight(1, 0);
             animator.SetBool("Shoot", false);
         }
@@ -111,8 +121,14 @@ public class PlayerManager : MonoBehaviour
 
     public void Reroad()
     {
-        Debug.Log("Reroad");
         controller.isReroad = false;
+        SetRigWeight(1);
         animator.SetLayerWeight(1, 0);
+    }
+
+    void SetRigWeight(float weight)
+    {
+        aimRig.weight = weight;
+        handRig.weight = weight;
     }
 }
