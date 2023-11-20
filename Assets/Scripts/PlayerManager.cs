@@ -39,6 +39,26 @@ public class PlayerManager : MonoBehaviour
 
     void AimCheck()
     {
+        if (input.reroad)
+        {
+            input.reroad = false;
+
+            if (controller.isReroad)
+            {
+                return;
+            }
+
+            AimController(false);
+            animator.SetLayerWeight(1, 1);
+            animator.SetTrigger("Reroad");
+            controller.isReroad = true;
+        }
+
+        if (controller.isReroad)
+        {
+            return;
+        }
+
         if (input.aim)
         {
             AimController(true);
@@ -64,11 +84,21 @@ public class PlayerManager : MonoBehaviour
             Vector3 aimDir = (targetAim - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * aimSpeed);
+
+            if (input.shoot)
+            {
+                animator.SetBool("Shoot", true);
+            }
+            else
+            {
+                animator.SetBool("Shoot", false);
+            }
         }
         else
         {
             AimController(false);
             animator.SetLayerWeight(1, 0);
+            animator.SetBool("Shoot", false);
         }
     }
 
@@ -77,5 +107,12 @@ public class PlayerManager : MonoBehaviour
         aimCam.gameObject.SetActive(isCheck);
         aimImage.SetActive(isCheck);
         controller.isAimMove = isCheck;
+    }
+
+    public void Reroad()
+    {
+        Debug.Log("Reroad");
+        controller.isReroad = false;
+        animator.SetLayerWeight(1, 0);
     }
 }
