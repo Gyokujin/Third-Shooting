@@ -627,6 +627,37 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
+--- !u!1 &463737786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 463737787}
+  m_Layer: 0
+  m_Name: BulletCasePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463737787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463737786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.1284, y: 0.0655, z: 0.0165}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4778094364526903032}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &730199423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -864,6 +895,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Effectors: []
+--- !u!1 &1151669026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1151669027}
+  m_Layer: 0
+  m_Name: ClipPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1151669027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151669026}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.13699627, y: -0.033581052, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4778094364526903032}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1221857885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1407,15 @@ MonoBehaviour:
   bulletPoint: {fileID: 1827773625}
   bulletObj: {fileID: 5341742223406746680, guid: 9c3cddd6060b7cc4eadfb9cefcf6e7db,
     type: 3}
+  maxShootDelay: 0.2
+  currentShootDelay: 0.2
   weaponFlashFX: {fileID: 407313580153142555, guid: d0a6e1220b11e4f49bde4ce2e0b48ecc,
+    type: 3}
+  bulletCasePoint: {fileID: 463737787}
+  bulletCaseFX: {fileID: 5567075513378800206, guid: c917bb3818380b749bd20bb2ff64b250,
+    type: 3}
+  weaponClipPoint: {fileID: 1151669027}
+  weaponClipFX: {fileID: 5567075513378800206, guid: f3a32125957be3d4193bfca90f844170,
     type: 3}
 --- !u!1 &1621042552
 GameObject:
@@ -3338,6 +3408,8 @@ Transform:
   - {fileID: 345116666}
   - {fileID: 1761678040}
   - {fileID: 1827773625}
+  - {fileID: 463737787}
+  - {fileID: 1151669027}
   m_Father: {fileID: 8626512283125135968}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
 --- !u!4 &4784260141275482568
@@ -4140,7 +4212,12 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Left_LowerArm'\n\tTransform 'Chest'\n\tTransform
+    'Spine'\n\tTransform 'Left_Hand'\n\tTransform 'Right_UpperArm'\n\tTransform 'Right_LowerArm'\n\tTransform
+    'Left_UpperArm'\n\tTransform 'Right_Hand'\n\tTransform 'Left_LowerArm'\n\tTransform
+    'Chest'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

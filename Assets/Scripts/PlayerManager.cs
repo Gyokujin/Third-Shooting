@@ -132,4 +132,9 @@ public class PlayerManager : MonoBehaviour
         aimRig.weight = weight;
         handRig.weight = weight;
     }
+
+    public void ReroadWeaponClip()
+    {
+        GameManager.instance.ReroadClip();
+    }
 }

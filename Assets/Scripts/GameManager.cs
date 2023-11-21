@@ -12,25 +12,47 @@ public class GameManager : MonoBehaviour
     private Transform bulletPoint;
     [SerializeField]
     private GameObject bulletObj;
+    [SerializeField]
+    private float maxShootDelay = 0.2f;
+    [SerializeField]
+    private float currentShootDelay = 0.2f;
 
     [Header("Weapon FX")]
     [SerializeField]
     private GameObject weaponFlashFX;
+    [SerializeField]
+    private Transform bulletCasePoint;
+    [SerializeField]
+    private GameObject bulletCaseFX;
+    [SerializeField]
+    private Transform weaponClipPoint;
+    [SerializeField]
+    private GameObject weaponClipFX;
 
     void Start()
     {
         instance = this;
-    }
 
-    void Update()
-    {
-        
+        currentShootDelay = 0;
     }
 
     public void Shooting(Vector3 targetPosition)
     {
-        Instantiate(weaponFlashFX, bulletPoint.position, Quaternion.identity); ;
+        currentShootDelay += Time.deltaTime;
+
+        if (currentShootDelay < maxShootDelay)
+            return;
+
+        currentShootDelay = 0;
+
+        Instantiate(weaponFlashFX, bulletPoint);
+        Instantiate(bulletCaseFX, bulletCasePoint);
         Vector3 aim = (targetPosition - bulletPoint.position).normalized;
         Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim, Vector3.up));
+    }
+
+    public void ReroadClip()
+    {
+        Instantiate(weaponClipFX, weaponClipPoint);
     }
 }
