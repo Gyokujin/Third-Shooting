@@ -97,6 +97,7 @@ public class PlayerManager : MonoBehaviour
             if (input.shoot)
             {
                 animator.SetBool("Shoot", true);
+                GameManager.instance.Shooting(targetPosition);
             }
             else
             {
