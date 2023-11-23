@@ -31,6 +31,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private Rig aimRig;
 
+    private Enemy enemy;
+
     void Start()
     {
         input = GetComponent<StarterAssetsInputs>();
@@ -79,6 +81,8 @@ public class PlayerManager : MonoBehaviour
             {
                 targetPosition = hit.point;
                 aimObject.transform.position = hit.point;
+
+                enemy = hit.collider.gameObject.GetComponent<Enemy>();
             }
             else
             {
@@ -97,7 +101,7 @@ public class PlayerManager : MonoBehaviour
             if (input.shoot)
             {
                 animator.SetBool("Shoot", true);
-                GameManager.instance.Shooting(targetPosition);
+                GameManager.instance.Shooting(targetPosition, enemy);
             }
             else
             {

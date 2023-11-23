@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         bulletText.text = currentBullet + " / " + maxBullet;
     }
 
-    public void Shooting(Vector3 targetPosition)
+    public void Shooting(Vector3 targetPosition, Enemy enemy)
     {
         currentShootDelay += Time.deltaTime;
 
@@ -56,21 +56,41 @@ public class GameManager : MonoBehaviour
 
         currentBullet--;
         currentShootDelay = 0;
-
-        Instantiate(weaponFlashFX, bulletPoint);
-        Instantiate(bulletCaseFX, bulletCasePoint);
         Vector3 aim = (targetPosition - bulletPoint.position).normalized;
-        Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim, Vector3.up));
+
+        GameObject flashFX = PoolManager.instance.ActivateObj(1); // »ç°Ý ÀÌÆåÆ® FX
+        SetObjPosition(flashFX, bulletPoint);
+        flashFX.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+
+        GameObject caseFX = PoolManager.instance.ActivateObj(2); // ÅºÇÇ FX
+        SetObjPosition(caseFX, bulletCasePoint);
+
+        GameObject prefabToSpawn = PoolManager.instance.ActivateObj(0); // ÃÑ¾Ë ¿ÀºêÁ§Æ®
+        SetObjPosition(prefabToSpawn, bulletPoint);
+        prefabToSpawn.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+
+        //if (enemy != null && enemy.enemyCurrentHP > 0) // Raycast
+        //{
+        //    enemy.enemyCurrentHP--;
+        //    Debug.Log("enemy HP : " + enemy.enemyCurrentHP);
+        //}
     }
 
     public void ReroadClip()
     {
-        Instantiate(weaponClipFX, weaponClipPoint);
+        GameObject clipFX = PoolManager.instance.ActivateObj(3); // ÅºÃ¢ FX
+        SetObjPosition(clipFX, weaponClipPoint);
+
         InitBullet();
     }
     
     void InitBullet()
     {
         currentBullet = maxBullet;
+    }
+
+    void SetObjPosition(GameObject obj, Transform targetTransform)
+    {
+        obj.transform.position = targetTransform.position;
     }
 }
