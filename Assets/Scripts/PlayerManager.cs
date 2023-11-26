@@ -31,6 +31,13 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private Rig aimRig;
 
+    [Header("Weapon Sound Effect")]
+    [SerializeField]
+    private AudioClip shootingSound;
+    [SerializeField]
+    private AudioClip[] reroadSound;
+    private AudioSource weaponSound;
+
     private Enemy enemy;
 
     void Start()
@@ -38,6 +45,7 @@ public class PlayerManager : MonoBehaviour
         input = GetComponent<StarterAssetsInputs>();
         controller = GetComponent<ThirdPersonController>();
         animator = GetComponent<Animator>();
+        weaponSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -140,5 +148,11 @@ public class PlayerManager : MonoBehaviour
     public void ReroadWeaponClip()
     {
         GameManager.instance.ReroadClip();
+    }
+
+    void PlayWeaponSound(AudioClip sound)
+    {
+        weaponSound.clip = sound;
+        weaponSound.Play();
     }
 }
