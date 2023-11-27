@@ -1,15 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    private int enemyMaxHP = 10;
-    public int enemyCurrentHP = 0;
+    [SerializeField]
+    private Slider HPBar;
+
+    private float enemyMaxHP = 10;
+    public float enemyCurrentHP = 0;
 
     void Start()
     {
         InitEnemyHP();
+    }
+
+    void Update()
+    {
+        HPBar.value = enemyCurrentHP / enemyMaxHP;
     }
 
     void InitEnemyHP()
