@@ -109,7 +109,7 @@ public class PlayerManager : MonoBehaviour
             if (input.shoot)
             {
                 animator.SetBool("Shoot", true);
-                GameManager.instance.Shooting(targetPosition, enemy);
+                GameManager.instance.Shooting(targetPosition, enemy, weaponSound, shootingSound);
             }
             else
             {
@@ -137,6 +137,7 @@ public class PlayerManager : MonoBehaviour
         controller.isReroad = false;
         SetRigWeight(1);
         animator.SetLayerWeight(1, 0);
+        PlayWeaponSound(reroadSound[2]);
     }
 
     void SetRigWeight(float weight)
@@ -148,6 +149,12 @@ public class PlayerManager : MonoBehaviour
     public void ReroadWeaponClip()
     {
         GameManager.instance.ReroadClip();
+        PlayWeaponSound(reroadSound[0]);
+    }
+
+    public void ReroadInsertClip()
+    {
+        PlayWeaponSound(reroadSound[1]);
     }
 
     void PlayWeaponSound(AudioClip sound)
