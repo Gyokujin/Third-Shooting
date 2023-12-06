@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -37,19 +38,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] spawnPoint;
 
+    [Header("BGM")]
+    [SerializeField]
+    private AudioClip bgmSound;
+    private AudioSource BGM;
+
+    private PlayableDirector cut;
+    public bool isReady = true;
+
     void Start()
     {
         instance = this;
 
         currentShootDelay = 0;
+        cut = GetComponent<PlayableDirector>();
+        cut.Play();
+
         InitBullet();
-
-        Invoke("GameStart", 5f);
-    }
-
-    void GameStart()
-    {
-        StartCoroutine(EnemySpawn());
     }
 
     void Update()
@@ -115,6 +120,21 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
+        StartCoroutine(EnemySpawn());
+    }
+
+    void PlayBGMSound()
+    {
+        BGM = GetComponent<AudioSource>();
+        BGM.clip = bgmSound;
+        BGM.loop = true;
+        BGM.Play();
+    }
+
+    public void StartGame()
+    {
+        isReady = false;
+        PlayBGMSound();
         StartCoroutine(EnemySpawn());
     }
 }

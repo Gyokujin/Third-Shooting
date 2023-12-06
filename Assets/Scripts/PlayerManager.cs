@@ -50,6 +50,13 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.isReady)
+        {
+            AimController(false);
+            SetRigWeight(0);
+            return;
+        }
+
         AimCheck();
     }
 
