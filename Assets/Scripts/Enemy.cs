@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -18,10 +17,13 @@ public class Enemy : MonoBehaviour
     private GameObject targetPlayer;
     private float targetDelay = 0.5f;
 
+    private CapsuleCollider enemyCollider;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        enemyCollider = GetComponent<CapsuleCollider>();
 
         targetPlayer = GameObject.FindWithTag("Player");
 
@@ -75,8 +77,12 @@ public class Enemy : MonoBehaviour
     {
         agent.speed = 0;
         animator.SetTrigger("Dead");
+        enemyCollider.enabled = false;
 
         yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        InitEnemyHP();
+        agent.speed = 1;
+        enemyCollider.enabled = true;
     }
 }

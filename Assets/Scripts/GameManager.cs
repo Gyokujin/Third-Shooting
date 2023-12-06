@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,12 +33,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject weaponClipFX;
 
+    [Header("Enemy")]
+    [SerializeField]
+    private GameObject[] spawnPoint;
+
     void Start()
     {
         instance = this;
 
         currentShootDelay = 0;
         InitBullet();
+
+        Invoke("GameStart", 5f);
+    }
+
+    void GameStart()
+    {
+        StartCoroutine(EnemySpawn());
     }
 
     void Update()
@@ -96,5 +106,15 @@ public class GameManager : MonoBehaviour
     void SetObjPosition(GameObject obj, Transform targetTransform)
     {
         obj.transform.position = targetTransform.position;
+    }
+
+    IEnumerator EnemySpawn()
+    {
+        GameObject enemy = PoolManager.instance.ActivateObj(4);
+        SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
+
+        yield return new WaitForSeconds(2f);
+
+        StartCoroutine(EnemySpawn());
     }
 }
